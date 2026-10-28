@@ -95,10 +95,27 @@ those notes when drafting a reply.
 
 ### Data usage disclosure
 
-Types of data collected: **none of the categories apply**
+Types of data collected: **tick "Website content" only**
 
-> The extension only stores the notes the user typed and the positions of their own marks. Those stay
-> inside the user's browser via `chrome.storage.local` and are never transmitted anywhere.
+Reasoning:
+
+- The extension reads text from the page when computing the hash that identifies a paragraph and when
+  building the quoted reply (`hash()` and `quoteSource()` in `content.js`). That counts as handling
+  website content.
+- The text itself is never stored. What is stored is the hash, the user's own note and the issue path —
+  all in `chrome.storage.local`, never transmitted.
+
+Leave the rest unticked: personally identifiable information, health, financial, authentication,
+personal communications, location, web history, user activity.
+
+> **Note**: the official docs do not clearly settle whether local-only storage requires ticking these
+> boxes. One page says disclosure is required "even when data is processed or stored locally", while the
+> definition of "collect" can be read as off-device transmission. This errs on the side of over-declaring,
+> because a reviewer reading the source will see the text being read. Adjust if the dashboard's own help
+> text says otherwise.
+>
+> "Web history" is a borderline call — the storage key contains `/owner/repo/issues/123`. It is limited to
+> pages the user marked and is not browsing-history collection, so it is left unticked.
 
 Tick all three certification checkboxes — all of them hold true:
 
