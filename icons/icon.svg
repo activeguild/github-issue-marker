@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- 96x96 のアートワーク + 周囲 16px の透明余白（Chrome ウェブストアのアイコン規定） -->
+  <rect x="16" y="16" width="96" height="96" rx="24" fill="#2da44e"/>
+  <path d="M38 36h52a10 10 0 0 1 10 10v26a10 10 0 0 1-10 10H60L45 97a2.5 2.5 0 0 1-4-2V82h-3a10 10 0 0 1-10-10V46a10 10 0 0 1 10-10Z" fill="#ffffff"/>
+  <path d="m46 59 9 9 22-22" fill="none" stroke="#2da44e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

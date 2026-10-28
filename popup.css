@@ -1,0 +1,71 @@
+:root {
+  color-scheme: light dark;
+  --ghrc-fg: #1f2328;
+  --ghrc-fg-muted: #59636e;
+  --ghrc-bg: #ffffff;
+  --ghrc-bg-muted: #f6f8fa;
+  --ghrc-border: #d0d7de;
+  --ghrc-danger: #cf222e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ghrc-fg: #e6edf3;
+    --ghrc-fg-muted: #9198a1;
+    --ghrc-bg: #0d1117;
+    --ghrc-bg-muted: #151b23;
+    --ghrc-border: #3d444d;
+    --ghrc-danger: #f85149;
+  }
+}
+
+body {
+  width: 300px;
+  margin: 0;
+  padding: 12px;
+  background: var(--ghrc-bg);
+  color: var(--ghrc-fg);
+  font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.ghrc-steps {
+  margin: 0 0 12px;
+  padding-left: 18px;
+  color: var(--ghrc-fg-muted);
+}
+.ghrc-steps li + li { margin-top: 4px; }
+
+.ghrc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ghrc-actions button {
+  padding: 5px 12px;
+  border: 1px solid var(--ghrc-border);
+  border-radius: 6px;
+  background: var(--ghrc-bg-muted);
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ghrc-actions button:hover { border-color: var(--ghrc-fg-muted); }
+.ghrc-actions .ghrc-danger { color: var(--ghrc-danger); }
+
+.ghrc-status {
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--ghrc-fg-muted);
+}
+
+.ghrc-foot {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--ghrc-fg-muted);
+}

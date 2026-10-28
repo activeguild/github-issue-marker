@@ -1,0 +1,305 @@
+/* ツールバー・マーク・メモ編集を載せるレイヤー（GitHub の DOM の外に置く） */
+#ghrc-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+#ghrc-layer [hidden] {
+  display: none !important;
+}
+
+/* ---- ホバー時のツールバー [✓][×][メモ] ---- */
+#ghrc-layer .ghrc-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--bgColor-default, #ffffff);
+  border: 1px solid var(--borderColor-default, #d0d7de);
+  box-shadow: var(--shadow-resting-small, 0 1px 2px rgba(31, 35, 40, 0.12));
+  pointer-events: auto;
+}
+
+/* 当たり判定を見た目より少し広げる */
+#ghrc-layer .ghrc-toolbar::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+#ghrc-layer .ghrc-toolbar button {
+  position: relative; /* ::before より上に出す */
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fgColor-muted, #59636e);
+  line-height: 0;
+  cursor: pointer;
+}
+
+/* アイコン自体も大きく */
+#ghrc-layer .ghrc-toolbar svg {
+  width: 16px;
+  height: 16px;
+}
+#ghrc-layer .ghrc-mark svg {
+  width: 14px;
+  height: 14px;
+}
+
+#ghrc-layer .ghrc-toolbar button:hover {
+  background: var(--bgColor-neutral-muted, rgba(175, 184, 193, 0.2));
+}
+#ghrc-layer .ghrc-toolbar [data-act="check"]:hover { color: var(--fgColor-success, #1a7f37); }
+#ghrc-layer .ghrc-toolbar [data-act="cross"]:hover { color: var(--fgColor-danger, #d1242f); }
+#ghrc-layer .ghrc-toolbar [data-act="note"]:hover { color: var(--fgColor-accent, #0969da); }
+
+/* 現在の状態 */
+#ghrc-layer .ghrc-toolbar[data-state="check"] [data-act="check"] {
+  background: var(--bgColor-success-emphasis, #1f883d);
+  color: var(--fgColor-onEmphasis, #ffffff);
+}
+#ghrc-layer .ghrc-toolbar[data-state="cross"] [data-act="cross"] {
+  background: var(--bgColor-danger-emphasis, #cf222e);
+  color: var(--fgColor-onEmphasis, #ffffff);
+}
+#ghrc-layer .ghrc-toolbar[data-has-note="1"] [data-act="note"] {
+  color: var(--fgColor-accent, #0969da);
+}
+
+/* ---- マーク済みの印（ホバーを外しても残る） ---- */
+#ghrc-layer .ghrc-mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  color: var(--fgColor-onEmphasis, #ffffff);
+  line-height: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+#ghrc-layer .ghrc-mark[data-state="check"] { background: var(--bgColor-success-emphasis, #1f883d); }
+#ghrc-layer .ghrc-mark[data-state="cross"] { background: var(--bgColor-danger-emphasis, #cf222e); }
+
+#ghrc-layer button:focus-visible {
+  outline: 2px solid var(--focus-outlineColor, #0969da);
+  outline-offset: 2px;
+}
+
+/* ---- マーク済みブロックのハイライト ---- */
+.markdown-body .ghrc-checked,
+.markdown-body .ghrc-crossed {
+  border-radius: 4px;
+}
+.markdown-body .ghrc-checked {
+  background-color: var(--bgColor-success-muted, rgba(46, 160, 67, 0.15)) !important;
+  box-shadow: 0 0 0 3px var(--bgColor-success-muted, rgba(46, 160, 67, 0.15));
+}
+.markdown-body .ghrc-crossed {
+  background-color: var(--bgColor-danger-muted, rgba(248, 81, 73, 0.15)) !important;
+  box-shadow: 0 0 0 3px var(--bgColor-danger-muted, rgba(248, 81, 73, 0.15));
+}
+
+/* ---- 本文中のメモ表示 ---- */
+.markdown-body .ghrc-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 4px 0 12px;
+  padding: 6px 10px;
+  border-left: 3px solid var(--borderColor-accent-emphasis, #0969da);
+  border-radius: 0 6px 6px 0;
+  background: var(--bgColor-accent-muted, rgba(84, 174, 255, 0.15));
+  color: var(--fgColor-default, #1f2328);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  cursor: pointer;
+}
+.markdown-body .ghrc-note-icon {
+  flex: none;
+  padding-top: 4px;
+  line-height: 0;
+  color: var(--fgColor-accent, #0969da);
+}
+
+/* ---- メモ編集ポップアップ ---- */
+#ghrc-layer .ghrc-editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(380px, calc(100vw - 24px));
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid var(--borderColor-default, #d0d7de);
+  border-radius: 8px;
+  background: var(--overlay-bgColor, var(--bgColor-default, #ffffff));
+  box-shadow: var(--shadow-floating-medium, 0 8px 24px rgba(66, 74, 83, 0.12));
+  color: var(--fgColor-default, #1f2328);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  pointer-events: auto;
+}
+
+#ghrc-layer .ghrc-editor textarea {
+  display: block;
+  width: 100%;
+  min-height: 72px;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid var(--borderColor-default, #d0d7de);
+  border-radius: 6px;
+  background: var(--bgColor-default, #ffffff);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+}
+#ghrc-layer .ghrc-editor textarea:focus {
+  outline: 2px solid var(--focus-outlineColor, #0969da);
+  outline-offset: -1px;
+}
+
+#ghrc-layer .ghrc-editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+#ghrc-layer .ghrc-spacer { flex: 1; }
+#ghrc-layer .ghrc-hint {
+  font-size: 12px;
+  color: var(--fgColor-muted, #59636e);
+}
+
+#ghrc-layer .ghrc-editor-actions button {
+  padding: 3px 12px;
+  border: 1px solid var(--button-default-borderColor-rest, var(--borderColor-default, #d0d7de));
+  border-radius: 6px;
+  background: var(--button-default-bgColor-rest, var(--bgColor-muted, #f6f8fa));
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+#ghrc-layer .ghrc-editor-actions .ghrc-primary {
+  border-color: transparent;
+  background: var(--button-primary-bgColor-rest, #1f883d);
+  color: var(--button-primary-fgColor-rest, #ffffff);
+}
+#ghrc-layer .ghrc-editor-actions .ghrc-danger {
+  border-color: transparent;
+  background: transparent;
+  color: var(--fgColor-danger, #d1242f);
+}
+
+/* ---- 返信コメント作成パネル ---- */
+#ghrc-layer .ghrc-composer {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: min(560px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--borderColor-default, #d0d7de);
+  border-radius: 12px;
+  background: var(--overlay-bgColor, var(--bgColor-default, #ffffff));
+  box-shadow: var(--shadow-floating-large, 0 12px 28px rgba(66, 74, 83, 0.2));
+  color: var(--fgColor-default, #1f2328);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  pointer-events: auto;
+}
+
+#ghrc-layer .ghrc-composer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#ghrc-layer .ghrc-icon-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fgColor-muted, #59636e);
+  line-height: 0;
+  cursor: pointer;
+}
+#ghrc-layer .ghrc-icon-btn:hover {
+  background: var(--bgColor-neutral-muted, rgba(175, 184, 193, 0.2));
+}
+
+#ghrc-layer .ghrc-composer-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 13px;
+}
+#ghrc-layer .ghrc-composer-opts label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+#ghrc-layer .ghrc-composer textarea {
+  flex: 1 1 auto;
+  min-height: 160px;
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid var(--borderColor-default, #d0d7de);
+  border-radius: 6px;
+  background: var(--bgColor-default, #ffffff);
+  color: inherit;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  resize: vertical;
+}
+#ghrc-layer .ghrc-composer textarea:focus {
+  outline: 2px solid var(--focus-outlineColor, #0969da);
+  outline-offset: -1px;
+}
+
+#ghrc-layer .ghrc-composer-empty {
+  margin: 0;
+  padding: 16px 8px;
+  font-size: 13px;
+  color: var(--fgColor-muted, #59636e);
+}
+
+#ghrc-layer .ghrc-editor-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>GitHub Issue Read Marker</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<h1>GitHub Issue Read Marker</h1>
+<ol class="ghrc-steps">
+  <li>GitHub の Issue ページを開きます。</li>
+  <li>本文やコメントの段落にマウスを乗せると、左側に <b>[✓][×][メモ]</b> のツールバーが出ます。</li>
+  <li>付けたマークとメモはこのブラウザー内だけに保存され、次に同じ Issue を開いたときに復元されます。</li>
+</ol>
+<div class="ghrc-actions">
+  <button type="button" id="compose">メモと×から返信コメントを作成</button>
+  <button type="button" id="clear" class="ghrc-danger">このページのマークとメモを消去</button>
+</div>
+<p class="ghrc-status" id="status" role="status" aria-live="polite"></p>
+<p class="ghrc-foot">右クリックメニューからも同じ操作ができます。</p>
+<script src="popup.js"></script>
+</body>
+</html>

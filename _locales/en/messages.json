@@ -1,0 +1,10 @@
+{
+  "name": {
+    "message": "GitHub Issue Read Marker",
+    "description": "Extension name; also the store listing title"
+  },
+  "description": {
+    "message": "Mark paragraphs of a GitHub issue with a check or a cross and attach private notes as you read.",
+    "description": "Extension summary; also the store listing summary (max 132 characters)"
+  }
+}

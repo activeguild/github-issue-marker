@@ -1,0 +1,10 @@
+{
+  "name": {
+    "message": "GitHub Issue Read Marker",
+    "description": "拡張機能の名前。ストアの掲載タイトルにもなる"
+  },
+  "description": {
+    "message": "GitHub Issue の本文・コメントに ✓ / × のマークやメモを付けて、読んだ箇所の目印にします。",
+    "description": "拡張機能の概要。ストアの概要欄にもなる（132 文字以内）"
+  }
+}

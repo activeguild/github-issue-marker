@@ -1,0 +1,11 @@
+# Chrome ウェブストアへ提出する zip
+dist/
+
+# エディタ・ツールのローカル設定
+.claude/
+.vscode/
+.idea/
+
+# OS が勝手に作るもの
+.DS_Store
+Thumbs.db
