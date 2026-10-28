@@ -9,6 +9,7 @@
   const BLOCK_SEL = BLOCK_TAGS.map((t) => `.markdown-body ${t}`).join(',');
 
   const GAP = 6; // コメント本文の左端からの距離(px)
+  const EDGE = 4; // 画面左端からの最小距離(px)
   const HIDE_DELAY = 400; // ホバーを外してからツールバーを消すまで(ms)
   const STORAGE_PREFIX = 'ghrc:';
 
@@ -274,7 +275,8 @@
       return;
     }
     node.hidden = false;
-    const x = Math.round(pos.right - node.offsetWidth);
+    // 本文が画面左端に寄っていると左外側に置ききれないので、画面内へ押し戻す
+    const x = Math.round(Math.max(EDGE, pos.right - node.offsetWidth));
     const y = Math.round(pos.cy - node.offsetHeight / 2);
     node.style.transform = `translate(${x}px, ${y}px)`;
   }
