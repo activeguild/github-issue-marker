@@ -67,11 +67,22 @@ pasted in by hand.
 
 ### Support links
 
-| Field | URL |
+| Field | What to enter |
 | --- | --- |
-| Homepage | `https://github.com/activeguild/github-issue-marker` |
-| Support | `https://github.com/activeguild/github-issue-marker/issues` |
-| Privacy policy | `https://github.com/activeguild/github-issue-marker/blob/main/PRIVACY.md` |
+| Homepage URL | `https://github.com/activeguild/github-issue-marker` |
+| Support URL | `https://github.com/activeguild/github-issue-marker/issues` |
+| Privacy policy URL | `https://github.com/activeguild/github-issue-marker/blob/main/PRIVACY.md` |
+| **Official URL** | **leave blank** |
+
+All three are optional, but homepage and support are worth filling in — they surface as links in the
+Details and support sections of the listing.
+
+Official URL cannot be filled in. Its dropdown only offers sites whose ownership has been verified in
+Google Search Console, and filling it adds a "verified publisher" badge under the listing title.
+`github.com` belongs to GitHub, so it can never appear there. Leaving it blank is fine.
+
+To fill it later you would need your own domain, verified in Search Console, with the privacy policy
+moved there. Not needed for a first release.
 
 ## Privacy tab
 

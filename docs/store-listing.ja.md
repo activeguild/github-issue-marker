@@ -65,11 +65,23 @@ https://github.com/activeguild/github-issue-marker
 
 ### サポート用リンク
 
-| 欄 | URL |
+| 欄 | 入力するもの |
 | --- | --- |
-| ホームページ | `https://github.com/activeguild/github-issue-marker` |
-| サポート | `https://github.com/activeguild/github-issue-marker/issues` |
-| プライバシーポリシー | `https://github.com/activeguild/github-issue-marker/blob/main/PRIVACY.md` |
+| ホームページ URL | `https://github.com/activeguild/github-issue-marker` |
+| サポート URL | `https://github.com/activeguild/github-issue-marker/issues` |
+| プライバシーポリシー URL | `https://github.com/activeguild/github-issue-marker/blob/main/PRIVACY.md` |
+| **公式 URL** | **空欄のまま** |
+
+3 つともオプション扱いですが、ホームページとサポートは入れておきます。掲載ページの
+「詳細」とサポート欄にリンクが出て、利用者が困ったときの行き先ができます。
+
+公式 URL だけは埋められません。この欄は **Google Search Console でドメインの所有権を
+確認済みのサイトだけ**がプルダウンに出る仕組みで、埋めると掲載タイトルの下に
+「確認済みの提供元」バッジが付きます。`github.com` は GitHub 社のドメインなので
+所有権を確認できず、選択肢に出てきません。空欄で問題なく公開できます。
+
+将来この欄を埋めたい場合は、独自ドメインを取得して Search Console で確認し、
+そこにプライバシーポリシーを置き直す流れになります。初回公開では不要です。
 
 ## プライバシータブ
 
