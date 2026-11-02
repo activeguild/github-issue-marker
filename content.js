@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  // 対象ページ。PR の会話タブも対象にするなら /issues/ を /(?:issues|pull)/ に変更
-  const PAGE_RE = /^\/[^/]+\/[^/]+\/issues\/\d+/;
+  // 対象ページ。Issue と Pull Request の会話タブ（PR の Files changed などは対象外）
+  const PAGE_RE = /^(\/[^/]+\/[^/]+\/(?:issues|pull)\/\d+)\/?$/;
 
   // マーク・メモの単位になるブロック要素（Issue 本文・コメントの Markdown 内）
   const BLOCK_TAGS = ['p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'tr', 'summary'];
@@ -39,6 +39,11 @@
   let hideTimer = 0;
   let raf = 0;
   let editingId = null;
+  let cursorEl = null; // キーボード操作で選んでいるブロック
+  let lastMouse = '';
+  let lastWrite = 0; // 自分が最後に書き込んだ updatedAt
+  let pendingRemoves = 0; // 自分が出した削除のうち、storage.onChanged がまだ届いていない数
+  const WRITER = Math.random().toString(36).slice(2); // このタブの書き込みを見分ける ID
   const marks = new Map(); // ID -> 左側のマーク
   const notes = new Map(); // ID -> 本文中に差し込むメモ表示
 
@@ -135,7 +140,19 @@
   const composerEmpty = composer.querySelector('.ghrc-composer-empty');
   const composerStatus = composer.querySelector('.ghrc-status');
 
-  layer.append(toolbar, editor, composer);
+  // 読了率のバッジ（画面左下）。クリックで次の未読箇所へ
+  const progress = document.createElement('button');
+  progress.type = 'button';
+  progress.className = 'ghrc-progress';
+  progress.hidden = true;
+  progress.title = i18n('progressJump');
+  progress.addEventListener('mousedown', (e) => e.preventDefault());
+  progress.addEventListener('click', (e) => {
+    e.preventDefault();
+    jumpToUnread();
+  });
+
+  layer.append(toolbar, editor, composer, progress);
   document.documentElement.appendChild(layer);
 
   // ---- 保存 ---------------------------------------------------------------
@@ -148,19 +165,23 @@
   const storageKey = () => STORAGE_PREFIX + pageKey;
   const getItem = (id) => items.get(id) || {};
 
+  function parseItems(raw) {
+    const map = new Map();
+    if (Array.isArray(raw)) {
+      // v1 形式（チェック済み ID の配列）からの移行
+      for (const id of raw) map.set(id, { s: 'check' });
+    } else if (raw && raw.items) {
+      for (const [id, it] of Object.entries(raw.items)) map.set(id, it);
+    }
+    return map;
+  }
+
   function load() {
     const key = storageKey();
     try {
       chrome.storage.local.get(key, (res) => {
         if (storageKey() !== key) return; // 読み込み中に別ページへ移動した
-        const raw = res[key];
-        const loaded = new Map();
-        if (Array.isArray(raw)) {
-          // v1 形式（チェック済み ID の配列）からの移行
-          for (const id of raw) loaded.set(id, { s: 'check' });
-        } else if (raw && raw.items) {
-          for (const [id, it] of Object.entries(raw.items)) loaded.set(id, it);
-        }
+        const loaded = parseItems(res[key]);
         // 読み込み完了前に付けたマークも失わないようマージ
         for (const [id, it] of items) loaded.set(id, it);
         items = loaded;
@@ -171,20 +192,52 @@
     }
   }
 
+  // 一覧画面に出すタイトル
+  function pageTitle() {
+    const h = document.querySelector('[data-testid="issue-title"], .js-issue-title');
+    return (h ? h.textContent : document.title.split(' · ')[0]).replace(/\s+/g, ' ').trim();
+  }
+
   function save() {
     const key = storageKey();
     try {
       if (items.size) {
+        lastWrite = Math.max(Date.now(), lastWrite + 1);
         chrome.storage.local.set({
-          [key]: { v: 2, updatedAt: Date.now(), items: Object.fromEntries(items) },
+          [key]: {
+            v: 2,
+            updatedAt: lastWrite,
+            w: WRITER,
+            title: pageTitle(),
+            total: order.length, // 一覧画面の読了率に使う。保存した時点の段落数
+            items: Object.fromEntries(items),
+          },
         });
       } else {
+        pendingRemoves++;
         chrome.storage.local.remove(key);
       }
     } catch (_) {
       /* 同上 */
     }
   }
+
+  // 他のタブや一覧画面（削除・読み込み）での変更を反映する。自分の書き込みのこだまは無視
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local' || !active) return;
+    const change = changes[storageKey()];
+    if (!change) return;
+    const nv = change.newValue;
+    if (nv === undefined && pendingRemoves > 0) {
+      pendingRemoves--;
+      return;
+    }
+    if (nv && nv.w === WRITER && nv.updatedAt <= lastWrite) return;
+    items = parseItems(nv);
+    if (editingId && !items.has(editingId)) closeEditor();
+    if (!composer.hidden) refreshComposer();
+    schedule();
+  });
 
   function putItem(id, it) {
     if (it.s || it.n) items.set(id, it);
@@ -204,7 +257,7 @@
   function onNavigate() {
     path = location.pathname;
     const m = path.match(PAGE_RE);
-    pageKey = m ? m[0] : null;
+    pageKey = m ? m[1] : null;
     active = !!pageKey;
 
     items = new Map();
@@ -216,8 +269,10 @@
     marks.clear();
     notes.clear();
     hideToolbar();
+    setCursor(null);
     closeEditor();
     closeComposer();
+    progress.hidden = true;
     needScan = true;
 
     if (active) load();
@@ -422,6 +477,21 @@
     }
 
     if (editingId) positionEditor();
+    renderProgress();
+  }
+
+  // ✓ か × が付いた段落を「読んだ」とみなす
+  function renderProgress() {
+    let read = 0;
+    for (const id of order) if (getItem(id).s) read++;
+    progress.hidden = !read;
+    if (!read) return;
+    const pct = Math.round((read / order.length) * 100);
+    const text = i18n('progress', [String(read), String(order.length), String(pct)]);
+    if (progress.textContent !== text) {
+      progress.textContent = text;
+      progress.style.setProperty('--ghrc-pct', `${pct}%`);
+    }
   }
 
   function schedule() {
@@ -505,6 +575,7 @@
     }
     clearTimeout(hideTimer);
     if (hoverEl === block && !toolbar.hidden) return;
+    if (block !== cursorEl) setCursor(null); // マウスで別のブロックに移ったらキーボードの選択は外す
     hoverEl = block;
     toolbar.hidden = false;
     schedule();
@@ -514,6 +585,10 @@
     'mousemove',
     (e) => {
       if (!active || editingId) return;
+      // キーボードで選んだ直後のスクロールで来る、座標の変わらない mousemove では選択を奪わない
+      const pos = `${e.clientX},${e.clientY}`;
+      if (cursorEl && pos === lastMouse) return;
+      lastMouse = pos;
       const t = e.target;
       if (!(t instanceof Element)) return;
 
@@ -542,6 +617,114 @@
   );
 
   document.documentElement.addEventListener('mouseleave', scheduleHide);
+
+  // ---- キーボード操作（manifest.json の commands から呼ばれる） -------------
+  const HEADER_SPACE = 64; // GitHub の固定ヘッダーぶん。これより上に隠れたブロックは「画面内」とみなさない
+
+  function setCursor(el) {
+    if (cursorEl === el) return;
+    if (cursorEl) cursorEl.classList.remove('ghrc-cursor');
+    cursorEl = el;
+    if (el) el.classList.add('ghrc-cursor');
+  }
+
+  function ensureScan() {
+    if (needScan) {
+      needScan = false;
+      rescan();
+    }
+  }
+
+  // 移動先にできるブロック（折りたたまれて見えないものは除く）
+  function navigableBlocks() {
+    ensureScan();
+    return order.map((id) => idToEl.get(id)).filter((el) => el && el.isConnected && positionFor(el));
+  }
+
+  function currentBlock() {
+    for (const el of [cursorEl, hoverEl]) if (el && el.isConnected && elToId.has(el)) return el;
+    return null;
+  }
+
+  function firstInView(blocks) {
+    return blocks.find((el) => el.getBoundingClientRect().bottom > HEADER_SPACE) || blocks[0] || null;
+  }
+
+  function focusBlock(el) {
+    if (!el) return;
+    setHover(el);
+    setCursor(el);
+    const r = el.getBoundingClientRect();
+    if (r.top < HEADER_SPACE || r.bottom > window.innerHeight) el.scrollIntoView({ block: 'center' });
+    schedule();
+  }
+
+  function moveCursor(dir) {
+    const blocks = navigableBlocks();
+    const i = blocks.indexOf(currentBlock());
+    if (i < 0) focusBlock(firstInView(blocks));
+    else focusBlock(blocks[Math.max(0, Math.min(blocks.length - 1, i + dir))]);
+  }
+
+  // 今の位置より後ろで、✓ も × も付いていない最初のブロックへ（末尾まで行ったら先頭から）
+  function jumpToUnread() {
+    const blocks = navigableBlocks();
+    if (!blocks.length) return;
+    const cur = currentBlock();
+    const start = cur ? blocks.indexOf(cur) + 1 : blocks.indexOf(firstInView(blocks));
+    for (let k = 0; k < blocks.length; k++) {
+      const el = blocks[(Math.max(0, start) + k) % blocks.length];
+      if (!getItem(elToId.get(el)).s) {
+        focusBlock(el);
+        return;
+      }
+    }
+  }
+
+  // 選択中のブロックに操作する。まだ何も選んでいなければ、まず画面内の先頭を選ぶだけにする
+  function actOnCurrent(fn) {
+    ensureScan();
+    const el = currentBlock();
+    if (!el) {
+      focusBlock(firstInView(navigableBlocks()));
+      return;
+    }
+    focusBlock(el);
+    fn(elToId.get(el));
+  }
+
+  function isTyping() {
+    const a = document.activeElement;
+    return !!a && (a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+  }
+
+  function runCommand(command) {
+    // メモ編集中・返信作成中・GitHub のコメント欄などへの入力中は何もしない
+    if (!active || editingId || !composer.hidden || isTyping()) return;
+    switch (command) {
+      case 'next-block':
+        moveCursor(1);
+        break;
+      case 'prev-block':
+        moveCursor(-1);
+        break;
+      case 'next-unread':
+        jumpToUnread();
+        break;
+      case 'toggle-check':
+        actOnCurrent((id) => setStatus(id, 'check'));
+        break;
+      case 'toggle-cross':
+        actOnCurrent((id) => setStatus(id, 'cross'));
+        break;
+      case 'write-note':
+        actOnCurrent((id) => openEditor(id));
+        break;
+      case 'compose-reply':
+        openComposer();
+        break;
+    }
+  }
 
   // ---- 返信コメントの作成 -------------------------------------------------
   function cleanText(el, dropSublists) {
@@ -716,6 +899,7 @@
     if (!msg) return;
     if (msg.type === 'ghrc:compose-reply') openComposer();
     else if (msg.type === 'ghrc:clear-page') clearPage();
+    else if (msg.type === 'ghrc:command') runCommand(msg.command);
     sendResponse({ active }); // Issue ページ以外なら何も起きないので、呼び出し元に伝える
   });
 

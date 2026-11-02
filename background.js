@@ -4,7 +4,8 @@ const MENUS = [
   { id: 'ghrc-clear-page', titleKey: 'menuClearPage', message: 'ghrc:clear-page' },
 ];
 const CONTEXTS = ['page', 'selection', 'link', 'image'];
-const PATTERNS = ['https://github.com/*/issues/*'];
+// PR の Files changed などにも出るが、content.js 側が会話タブ以外では何もしない
+const PATTERNS = ['https://github.com/*/issues/*', 'https://github.com/*/pull/*'];
 
 // ブラウザーの表示言語が変わっても追従するよう、起動のたびに作り直す
 chrome.runtime.onInstalled.addListener(createMenus);
@@ -32,11 +33,22 @@ function createMenus() {
   });
 }
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  const menu = MENUS.find((m) => m.id === info.menuItemId);
-  if (!menu || !tab || tab.id == null) return;
-  chrome.tabs.sendMessage(tab.id, { type: menu.message }, () => {
-    // 拡張を更新した直後で、ページ側のスクリプトがまだ古い／無い場合は無視
+function sendToTab(tab, message) {
+  if (!tab || tab.id == null) return;
+  chrome.tabs.sendMessage(tab.id, message, () => {
+    // 拡張を更新した直後で、ページ側のスクリプトがまだ古い／無い場合や、GitHub 以外のタブでは無視
     void chrome.runtime.lastError;
   });
+}
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  const menu = MENUS.find((m) => m.id === info.menuItemId);
+  if (menu) sendToTab(tab, { type: menu.message });
+});
+
+// キーボードショートカット（manifest.json の commands）
+chrome.commands.onCommand.addListener((command, tab) => {
+  const message = { type: 'ghrc:command', command };
+  if (tab) sendToTab(tab, message);
+  else chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => sendToTab(tabs[0], message));
 });

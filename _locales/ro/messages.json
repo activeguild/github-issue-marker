@@ -4,10 +4,9 @@
     "description": "Extension name; also the store listing title"
   },
   "description": {
-    "message": "Marchează paragrafele unui issue GitHub cu ✓ sau × și adaugă notițe private în timp ce citești.",
+    "message": "Marchează paragrafele din issue-urile și pull request-urile GitHub cu ✓ sau × și adaugă notițe private în timp ce citești.",
     "description": "Extension summary; also the store listing summary (max 132 characters)"
   },
-
   "markCheck": {
     "message": "Marchează cu ✓",
     "description": "Toolbar ✓ button"
@@ -52,7 +51,6 @@
     "message": "⌘/Ctrl+Enter pentru a salva",
     "description": "Note editor: shortcut hint"
   },
-
   "composeTitle": {
     "message": "Compune un răspuns",
     "description": "Heading of the reply composer"
@@ -89,7 +87,10 @@
     "message": "Fragmente citate: $COUNT$",
     "description": "Reply composer: number of quoted passages",
     "placeholders": {
-      "count": { "content": "$1", "example": "3" }
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
     }
   },
   "copied": {
@@ -108,7 +109,6 @@
     "message": "Nu s-a găsit caseta de comentariu",
     "description": "Reply composer: comment box missing and copy failed"
   },
-
   "clearNothing": {
     "message": "Pe această pagină nu există marcaje sau notițe de șters.",
     "description": "Clear page: nothing to clear"
@@ -117,11 +117,16 @@
     "message": "Se vor șterge toate marcajele (✓ și ×) de pe această pagină ($MARKED$) și toate notițele ($NOTED$).\nAceastă acțiune nu poate fi anulată. Continui?",
     "description": "Clear page: confirmation dialog",
     "placeholders": {
-      "marked": { "content": "$1", "example": "5" },
-      "noted": { "content": "$2", "example": "2" }
+      "marked": {
+        "content": "$1",
+        "example": "5"
+      },
+      "noted": {
+        "content": "$2",
+        "example": "2"
+      }
     }
   },
-
   "menuComposeReply": {
     "message": "Compune un răspuns din notițe și ×",
     "description": "Context menu item and popup button"
@@ -130,9 +135,8 @@
     "message": "Șterge toate marcajele și notițele de pe această pagină",
     "description": "Context menu item"
   },
-
   "popupStep1": {
-    "message": "Deschide un issue pe GitHub.",
+    "message": "Deschide un issue sau un pull request pe GitHub.",
     "description": "Popup how-to, step 1"
   },
   "popupStep2": {
@@ -148,11 +152,246 @@
     "description": "Popup clear button"
   },
   "popupNotIssue": {
-    "message": "Deschide mai întâi un issue pe GitHub, apoi încearcă din nou.",
-    "description": "Popup: pressed outside an issue page"
+    "message": "Deschide mai întâi un issue GitHub sau fila Conversation a unui pull request, apoi încearcă din nou.",
+    "description": "Popup: pressed outside a supported page"
   },
   "popupFoot": {
     "message": "Aceleași acțiuni sunt disponibile și din meniul de clic dreapta.",
     "description": "Popup footer"
+  },
+  "progress": {
+    "message": "$READ$ / $TOTAL$ citite ($PCT$%)",
+    "description": "Progress badge at the bottom left of the page",
+    "placeholders": {
+      "read": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      },
+      "pct": {
+        "content": "$3"
+      }
+    }
+  },
+  "progressJump": {
+    "message": "Clic pentru a sări la următorul fragment necitit (fără ✓ sau ×)",
+    "description": "Tooltip of the progress badge"
+  },
+  "cmdNextBlock": {
+    "message": "Selectează paragraful următor",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdPrevBlock": {
+    "message": "Selectează paragraful anterior",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdNextUnread": {
+    "message": "Sari la următorul paragraf necitit",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdToggleCheck": {
+    "message": "Comută ✓ pe paragraful selectat",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdToggleCross": {
+    "message": "Comută × pe paragraful selectat",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdWriteNote": {
+    "message": "Scrie o notiță la paragraful selectat",
+    "description": "Keyboard shortcut description"
+  },
+  "popupOverview": {
+    "message": "Pagini salvate",
+    "description": "Popup: button that opens the saved-pages list"
+  },
+  "popupShortcuts": {
+    "message": "Comenzi rapide de la tastatură",
+    "description": "Popup: heading of the shortcut list"
+  },
+  "popupShortcutsEdit": {
+    "message": "Modifică",
+    "description": "Popup: link to the shortcut settings"
+  },
+  "popupShortcutNone": {
+    "message": "Nesetată",
+    "description": "Popup: no key assigned"
+  },
+  "overviewTitle": {
+    "message": "Pagini salvate",
+    "description": "Heading of the saved-pages list"
+  },
+  "overviewIntro": {
+    "message": "Issue-urile și pull request-urile pe care le-ai marcat sau adnotat. Datele sunt salvate doar în acest browser.",
+    "description": "Intro of the saved-pages list"
+  },
+  "overviewFilter": {
+    "message": "Filtrează după titlu sau depozit",
+    "description": "Saved pages: filter placeholder"
+  },
+  "overviewCount": {
+    "message": "Pagini: $COUNT$",
+    "description": "Saved pages: number of pages shown",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewEmpty": {
+    "message": "Încă nu există pagini cu marcaje sau notițe.",
+    "description": "Saved pages: nothing saved yet"
+  },
+  "overviewNoMatch": {
+    "message": "Nicio pagină nu corespunde filtrului.",
+    "description": "Saved pages: filter matched nothing"
+  },
+  "kindIssue": {
+    "message": "Issue",
+    "description": "Saved pages: kind label"
+  },
+  "kindPull": {
+    "message": "Pull request",
+    "description": "Saved pages: kind label"
+  },
+  "overviewCounts": {
+    "message": "✓ $CHECK$ · × $CROSS$ · notițe $NOTES$",
+    "description": "Saved pages: mark and note counts",
+    "placeholders": {
+      "check": {
+        "content": "$1"
+      },
+      "cross": {
+        "content": "$2"
+      },
+      "notes": {
+        "content": "$3"
+      }
+    }
+  },
+  "overviewProgress": {
+    "message": "$PCT$% citit",
+    "description": "Saved pages: progress, relative to the paragraph count at the last save",
+    "placeholders": {
+      "pct": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewUpdated": {
+    "message": "Actualizat: $DATE$",
+    "description": "Saved pages: last updated",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewUnknownDate": {
+    "message": "necunoscut",
+    "description": "Saved pages: unknown date (old data format)"
+  },
+  "overviewDeleteConfirm": {
+    "message": "Ștergi marcajele și notițele pentru „$TITLE$”? Această acțiune nu poate fi anulată.",
+    "description": "Saved pages: confirm deleting one page",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewData": {
+    "message": "Date",
+    "description": "Saved pages: data section heading"
+  },
+  "overviewUsage": {
+    "message": "Spațiu folosit: $USED$ din $QUOTA$",
+    "description": "Saved pages: storage usage",
+    "placeholders": {
+      "used": {
+        "content": "$1"
+      },
+      "quota": {
+        "content": "$2"
+      }
+    }
+  },
+  "overviewExport": {
+    "message": "Exportă (JSON)",
+    "description": "Saved pages: export button"
+  },
+  "overviewImport": {
+    "message": "Importă (JSON)",
+    "description": "Saved pages: import button"
+  },
+  "overviewDeleteStale": {
+    "message": "Șterge paginile neactualizate de peste 90 de zile",
+    "description": "Saved pages: delete stale pages button"
+  },
+  "overviewStaleNone": {
+    "message": "Nu există pagini neactualizate de peste 90 de zile.",
+    "description": "Saved pages: no stale pages"
+  },
+  "overviewStaleConfirm": {
+    "message": "Ștergi marcajele și notițele tuturor paginilor neactualizate de peste 90 de zile ($COUNT$)? Această acțiune nu poate fi anulată.",
+    "description": "Saved pages: confirm deleting stale pages",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewStaleDone": {
+    "message": "Pagini șterse: $COUNT$",
+    "description": "Saved pages: stale pages deleted",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportDone": {
+    "message": "Pagini exportate: $COUNT$",
+    "description": "Saved pages: export finished",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "importInvalid": {
+    "message": "Nu s-a putut importa nimic. Alege un fișier JSON exportat de această extensie.",
+    "description": "Saved pages: nothing importable"
+  },
+  "importConfirm": {
+    "message": "Importi datele acestor pagini ($COUNT$)? Paginile existente sunt combinate paragraf cu paragraf; unde ambele au același paragraf, se păstrează pagina actualizată mai recent.",
+    "description": "Saved pages: confirm import",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "importDone": {
+    "message": "Import finalizat — pagini noi: $ADDED$, combinate: $MERGED$",
+    "description": "Saved pages: import finished",
+    "placeholders": {
+      "added": {
+        "content": "$1"
+      },
+      "merged": {
+        "content": "$2"
+      }
+    }
+  },
+  "importFailed": {
+    "message": "Nu s-a putut salva: $ERROR$",
+    "description": "Saved pages: saving failed",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

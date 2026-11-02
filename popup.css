@@ -6,6 +6,7 @@
   --ghrc-bg-muted: #f6f8fa;
   --ghrc-border: #d0d7de;
   --ghrc-danger: #cf222e;
+  --ghrc-link: #0969da;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -15,6 +16,7 @@
     --ghrc-bg-muted: #151b23;
     --ghrc-border: #3d444d;
     --ghrc-danger: #f85149;
+    --ghrc-link: #4493f8;
   }
 }
 
@@ -69,3 +71,46 @@ h1 {
   font-size: 12px;
   color: var(--ghrc-fg-muted);
 }
+
+.ghrc-shortcuts {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ghrc-border);
+}
+.ghrc-shortcuts-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.ghrc-shortcuts h2 {
+  margin: 0 0 6px;
+  font-size: 12px;
+}
+.ghrc-link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ghrc-link);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.ghrc-link:hover { text-decoration: underline; }
+
+.ghrc-shortcuts dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 8px;
+  margin: 0;
+  font-size: 12px;
+}
+.ghrc-shortcuts dt { color: var(--ghrc-fg-muted); }
+.ghrc-shortcuts dd { margin: 0; text-align: right; white-space: nowrap; }
+.ghrc-shortcuts kbd {
+  padding: 0 4px;
+  border: 1px solid var(--ghrc-border);
+  border-radius: 4px;
+  background: var(--ghrc-bg-muted);
+  font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.ghrc-muted { color: var(--ghrc-fg-muted); }
