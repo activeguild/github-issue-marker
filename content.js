@@ -13,6 +13,9 @@
   const HIDE_DELAY = 400; // ホバーを外してからツールバーを消すまで(ms)
   const STORAGE_PREFIX = 'ghrc:';
 
+  // 表示文言は _locales/<言語>/messages.json から引く
+  const i18n = (key, subs) => chrome.i18n.getMessage(key, subs);
+
   const svg = (d) =>
     `<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="${d}"/></svg>`;
   const ICONS = {
@@ -21,7 +24,8 @@
     note: svg('M1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v7.5A1.75 1.75 0 0 1 13.25 12H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 13.543V12H2.75A1.75 1.75 0 0 1 1 10.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.75.75 0 0 1 .53-.22h4.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z'),
   };
   const STATUS_CLASS = { check: 'ghrc-checked', cross: 'ghrc-crossed' };
-  const STATUS_LABEL = { check: '✓を付ける', cross: '×を付ける' };
+  const STATUS_LABEL = { check: i18n('markCheck'), cross: i18n('markCross') };
+  const UNMARK_LABEL = { check: i18n('unmarkCheck'), cross: i18n('unmarkCross') };
 
   let path = null; // 直近に処理した location.pathname
   let pageKey = null; // 保存用キー（/owner/repo/issues/123）
@@ -47,7 +51,7 @@
   const toolbar = document.createElement('div');
   toolbar.className = 'ghrc-toolbar';
   toolbar.hidden = true;
-  for (const [act, label] of [['check', STATUS_LABEL.check], ['cross', STATUS_LABEL.cross], ['note', 'メモを書く']]) {
+  for (const [act, label] of [['check', STATUS_LABEL.check], ['cross', STATUS_LABEL.cross], ['note', i18n('writeNote')]]) {
     const b = document.createElement('button');
     b.type = 'button';
     b.dataset.act = act;
@@ -73,13 +77,13 @@
   editor.className = 'ghrc-editor';
   editor.hidden = true;
   editor.innerHTML =
-    '<textarea rows="3" placeholder="この箇所へのメモ（自分だけに表示されます）"></textarea>' +
+    `<textarea rows="3" placeholder="${i18n('notePlaceholder')}"></textarea>` +
     '<div class="ghrc-editor-actions">' +
-    '<button type="button" data-act="delete" class="ghrc-danger">削除</button>' +
+    `<button type="button" data-act="delete" class="ghrc-danger">${i18n('delete')}</button>` +
     '<span class="ghrc-spacer"></span>' +
-    '<span class="ghrc-hint">⌘/Ctrl+Enter で保存</span>' +
-    '<button type="button" data-act="cancel">キャンセル</button>' +
-    '<button type="button" data-act="save" class="ghrc-primary">保存</button>' +
+    `<span class="ghrc-hint">${i18n('saveHint')}</span>` +
+    `<button type="button" data-act="cancel">${i18n('cancel')}</button>` +
+    `<button type="button" data-act="save" class="ghrc-primary">${i18n('save')}</button>` +
     '</div>';
   const textarea = editor.querySelector('textarea');
   const deleteBtn = editor.querySelector('[data-act="delete"]');
@@ -108,24 +112,24 @@
   composer.className = 'ghrc-composer';
   composer.hidden = true;
   composer.setAttribute('role', 'dialog');
-  composer.setAttribute('aria-label', '返信コメントを作成');
+  composer.setAttribute('aria-label', i18n('composeTitle'));
   composer.innerHTML =
     '<div class="ghrc-composer-head">' +
-    '<strong>返信コメントを作成</strong>' +
-    `<button type="button" class="ghrc-icon-btn" data-act="close" title="閉じる" aria-label="閉じる">${ICONS.cross}</button>` +
+    `<strong>${i18n('composeTitle')}</strong>` +
+    `<button type="button" class="ghrc-icon-btn" data-act="close" title="${i18n('close')}" aria-label="${i18n('close')}">${ICONS.cross}</button>` +
     '</div>' +
     '<div class="ghrc-composer-opts">' +
-    '<label><input type="checkbox" data-opt="note" checked> メモがある箇所</label>' +
-    '<label><input type="checkbox" data-opt="cross" checked> ×の箇所</label>' +
-    '<label><input type="checkbox" data-opt="check"> ✓の箇所</label>' +
+    `<label><input type="checkbox" data-opt="note" checked> ${i18n('optNote')}</label>` +
+    `<label><input type="checkbox" data-opt="cross" checked> ${i18n('optCross')}</label>` +
+    `<label><input type="checkbox" data-opt="check"> ${i18n('optCheck')}</label>` +
     '</div>' +
     '<textarea rows="12" spellcheck="false"></textarea>' +
-    '<p class="ghrc-composer-empty" hidden>対象の箇所がありません。ツールバーでメモや×を付けると、ここに引用として集まります。</p>' +
+    `<p class="ghrc-composer-empty" hidden>${i18n('composeEmpty')}</p>` +
     '<div class="ghrc-editor-actions">' +
     '<span class="ghrc-hint ghrc-status" aria-live="polite"></span>' +
     '<span class="ghrc-spacer"></span>' +
-    '<button type="button" data-act="copy">コピー</button>' +
-    '<button type="button" data-act="insert" class="ghrc-primary">コメント欄に挿入</button>' +
+    `<button type="button" data-act="copy">${i18n('copy')}</button>` +
+    `<button type="button" data-act="insert" class="ghrc-primary">${i18n('insert')}</button>` +
     '</div>';
   const composerText = composer.querySelector('textarea');
   const composerEmpty = composer.querySelector('.ghrc-composer-empty');
@@ -313,7 +317,7 @@
   function makeNote(id) {
     const n = document.createElement('div');
     n.className = 'ghrc-note';
-    n.title = 'クリックしてメモを編集';
+    n.title = i18n('editNote');
     n.innerHTML = `<span class="ghrc-note-icon">${ICONS.note}</span><span class="ghrc-note-text"></span>`;
     n.addEventListener('click', (e) => {
       e.preventDefault();
@@ -377,7 +381,7 @@
         if (mark.dataset.state !== it.s) {
           mark.dataset.state = it.s;
           mark.innerHTML = ICONS[it.s];
-          const label = it.s === 'check' ? '✓を外す' : '×を外す';
+          const label = UNMARK_LABEL[it.s];
           mark.title = label;
           mark.setAttribute('aria-label', label);
         }
@@ -594,7 +598,7 @@
     composerText.hidden = count === 0;
     composerEmpty.hidden = count !== 0;
     for (const b of composer.querySelectorAll('[data-act="copy"], [data-act="insert"]')) b.disabled = count === 0;
-    composerStatus.textContent = count ? `${count} 箇所を引用` : '';
+    composerStatus.textContent = count ? i18n('quotedCount', [String(count)]) : '';
   }
 
   function openComposer() {
@@ -666,15 +670,13 @@
     if (b.dataset.act === 'close') {
       closeComposer();
     } else if (b.dataset.act === 'copy') {
-      composerStatus.textContent = (await copyText(text)) ? 'コピーしました' : 'コピーできませんでした';
+      composerStatus.textContent = i18n((await copyText(text)) ? 'copied' : 'copyFailed');
     } else if (b.dataset.act === 'insert') {
       if (insertIntoCommentBox(text)) {
         closeComposer();
       } else {
         const copied = await copyText(text);
-        composerStatus.textContent = copied
-          ? 'コメント欄が見つからないため、クリップボードにコピーしました'
-          : 'コメント欄が見つかりませんでした';
+        composerStatus.textContent = i18n(copied ? 'insertCopiedInstead' : 'insertFailed');
       }
     }
   });
@@ -696,13 +698,10 @@
       if (it.n) noted++;
     }
     if (!marked && !noted) {
-      window.alert('このページには消去するマークやメモがありません。');
+      window.alert(i18n('clearNothing'));
       return;
     }
-    const ok = window.confirm(
-      `このページのマーク（✓・×）${marked} 件とメモ ${noted} 件をすべて消去します。\n` +
-        '消去すると元に戻せません。よろしいですか？'
-    );
+    const ok = window.confirm(i18n('clearConfirm', [String(marked), String(noted)]));
     if (!ok) return;
     items = new Map();
     save();

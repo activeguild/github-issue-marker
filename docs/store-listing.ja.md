@@ -59,9 +59,9 @@ https://github.com/activeguild/github-issue-marker
 
 ### 言語
 
-既定の言語は日本語（`default_locale`）です。`_locales/en` があるため、ダッシュボードの
-掲載情報タブで英語を追加でき、名前と概要は自動的に英語版に切り替わります。
-英語の詳細な説明だけは [store-listing.en.md](store-listing.en.md) から貼り付けてください。
+既定の言語は英語（`default_locale`）です。`_locales/` には日本語とルーマニア語も入っているため、
+ダッシュボードの掲載情報タブで日本語（必要ならルーマニア語）を追加でき、名前と概要は自動的に切り替わります。
+詳細な説明だけは手で貼り付けてください（日本語はこのファイル、英語は [store-listing.en.md](store-listing.en.md)）。
 
 ### サポート用リンク
 

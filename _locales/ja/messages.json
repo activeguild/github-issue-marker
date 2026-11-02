@@ -6,5 +6,153 @@
   "description": {
     "message": "GitHub Issue の本文・コメントに ✓ / × のマークやメモを付けて、読んだ箇所の目印にします。",
     "description": "拡張機能の概要。ストアの概要欄にもなる（132 文字以内）"
+  },
+
+  "markCheck": {
+    "message": "✓を付ける",
+    "description": "ツールバーの ✓ ボタン"
+  },
+  "markCross": {
+    "message": "×を付ける",
+    "description": "ツールバーの × ボタン"
+  },
+  "writeNote": {
+    "message": "メモを書く",
+    "description": "ツールバーのメモボタン"
+  },
+  "unmarkCheck": {
+    "message": "✓を外す",
+    "description": "段落左の ✓ マーク（クリックで解除）"
+  },
+  "unmarkCross": {
+    "message": "×を外す",
+    "description": "段落左の × マーク（クリックで解除）"
+  },
+  "editNote": {
+    "message": "クリックしてメモを編集",
+    "description": "本文中に表示されるメモのツールチップ"
+  },
+  "notePlaceholder": {
+    "message": "この箇所へのメモ（自分だけに表示されます）",
+    "description": "メモ編集欄のプレースホルダー"
+  },
+  "delete": {
+    "message": "削除",
+    "description": "メモ編集：削除ボタン"
+  },
+  "cancel": {
+    "message": "キャンセル",
+    "description": "メモ編集：キャンセルボタン"
+  },
+  "save": {
+    "message": "保存",
+    "description": "メモ編集：保存ボタン"
+  },
+  "saveHint": {
+    "message": "⌘/Ctrl+Enter で保存",
+    "description": "メモ編集：ショートカットの案内"
+  },
+
+  "composeTitle": {
+    "message": "返信コメントを作成",
+    "description": "返信作成パネルの見出し"
+  },
+  "close": {
+    "message": "閉じる",
+    "description": "返信作成パネルの閉じるボタン"
+  },
+  "optNote": {
+    "message": "メモがある箇所",
+    "description": "返信作成：引用対象のチェックボックス"
+  },
+  "optCross": {
+    "message": "×の箇所",
+    "description": "返信作成：引用対象のチェックボックス"
+  },
+  "optCheck": {
+    "message": "✓の箇所",
+    "description": "返信作成：引用対象のチェックボックス"
+  },
+  "composeEmpty": {
+    "message": "対象の箇所がありません。ツールバーでメモや×を付けると、ここに引用として集まります。",
+    "description": "返信作成：引用する箇所が無いとき"
+  },
+  "copy": {
+    "message": "コピー",
+    "description": "返信作成：コピーボタン"
+  },
+  "insert": {
+    "message": "コメント欄に挿入",
+    "description": "返信作成：コメント欄に挿入するボタン"
+  },
+  "quotedCount": {
+    "message": "$COUNT$ 箇所を引用",
+    "description": "返信作成：引用した箇所の数",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "copied": {
+    "message": "コピーしました",
+    "description": "返信作成：コピー成功"
+  },
+  "copyFailed": {
+    "message": "コピーできませんでした",
+    "description": "返信作成：コピー失敗"
+  },
+  "insertCopiedInstead": {
+    "message": "コメント欄が見つからないため、クリップボードにコピーしました",
+    "description": "返信作成：コメント欄が無く、代わりにコピーしたとき"
+  },
+  "insertFailed": {
+    "message": "コメント欄が見つかりませんでした",
+    "description": "返信作成：コメント欄が無く、コピーもできなかったとき"
+  },
+
+  "clearNothing": {
+    "message": "このページには消去するマークやメモがありません。",
+    "description": "一括消去：対象が無いとき"
+  },
+  "clearConfirm": {
+    "message": "このページのマーク（✓・×）$MARKED$ 件とメモ $NOTED$ 件をすべて消去します。\n消去すると元に戻せません。よろしいですか？",
+    "description": "一括消去：確認ダイアログ",
+    "placeholders": {
+      "marked": { "content": "$1", "example": "5" },
+      "noted": { "content": "$2", "example": "2" }
+    }
+  },
+
+  "menuComposeReply": {
+    "message": "メモと×から返信コメントを作成",
+    "description": "右クリックメニュー・ポップアップのボタン"
+  },
+  "menuClearPage": {
+    "message": "このページのマークとメモをすべて消去",
+    "description": "右クリックメニュー"
+  },
+
+  "popupStep1": {
+    "message": "GitHub の Issue ページを開きます。",
+    "description": "ポップアップの使い方 1"
+  },
+  "popupStep2": {
+    "message": "本文やコメントの段落にマウスを乗せると、左側に [✓][×][メモ] のツールバーが出ます。",
+    "description": "ポップアップの使い方 2"
+  },
+  "popupStep3": {
+    "message": "付けたマークとメモはこのブラウザー内だけに保存され、次に同じ Issue を開いたときに復元されます。",
+    "description": "ポップアップの使い方 3"
+  },
+  "popupClear": {
+    "message": "このページのマークとメモを消去",
+    "description": "ポップアップの消去ボタン"
+  },
+  "popupNotIssue": {
+    "message": "GitHub の Issue ページを開いてからお試しください。",
+    "description": "ポップアップ：Issue ページ以外で押したとき"
+  },
+  "popupFoot": {
+    "message": "右クリックメニューからも同じ操作ができます。",
+    "description": "ポップアップ下部の補足"
   }
 }

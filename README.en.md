@@ -73,7 +73,7 @@ A dialog shows how many marks and notes will be removed before anything is delet
 | `content.css` | Styling for the above; follows GitHub's Primer CSS variables |
 | `background.js` | Registers the right-click menu and relays messages to `content.js` |
 | `popup.html` / `popup.js` / `popup.css` | The toolbar icon popup |
-| `_locales/` | Japanese and English name/summary for the store listing (the UI itself is Japanese only) |
+| `_locales/` | Name, summary and UI strings in English, Japanese and Romanian; picked by the browser's display language, falling back to English |
 | `icons/` | Extension icons (`icon.svg` is the source) |
 
 There is no build step — plain JavaScript and CSS are loaded as-is.

@@ -1,17 +1,21 @@
 const ROOT_ID = 'ghrc-root';
 const MENUS = [
-  { id: 'ghrc-compose-reply', title: 'メモと×から返信コメントを作成', message: 'ghrc:compose-reply' },
-  { id: 'ghrc-clear-page', title: 'このページのマークとメモをすべて消去', message: 'ghrc:clear-page' },
+  { id: 'ghrc-compose-reply', titleKey: 'menuComposeReply', message: 'ghrc:compose-reply' },
+  { id: 'ghrc-clear-page', titleKey: 'menuClearPage', message: 'ghrc:clear-page' },
 ];
 const CONTEXTS = ['page', 'selection', 'link', 'image'];
 const PATTERNS = ['https://github.com/*/issues/*'];
 
-chrome.runtime.onInstalled.addListener(() => {
+// ブラウザーの表示言語が変わっても追従するよう、起動のたびに作り直す
+chrome.runtime.onInstalled.addListener(createMenus);
+chrome.runtime.onStartup.addListener(createMenus);
+
+function createMenus() {
   chrome.contextMenus.removeAll(() => {
     // 第1階層：ツール名
     chrome.contextMenus.create({
       id: ROOT_ID,
-      title: 'GitHub Issue Read Marker',
+      title: chrome.i18n.getMessage('name'),
       contexts: CONTEXTS,
       documentUrlPatterns: PATTERNS,
     });
@@ -20,13 +24,13 @@ chrome.runtime.onInstalled.addListener(() => {
       chrome.contextMenus.create({
         id: m.id,
         parentId: ROOT_ID,
-        title: m.title,
+        title: chrome.i18n.getMessage(m.titleKey),
         contexts: CONTEXTS,
         documentUrlPatterns: PATTERNS,
       });
     }
   });
-});
+}
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   const menu = MENUS.find((m) => m.id === info.menuItemId);

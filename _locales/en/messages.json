@@ -6,5 +6,153 @@
   "description": {
     "message": "Mark paragraphs of a GitHub issue with a check or a cross and attach private notes as you read.",
     "description": "Extension summary; also the store listing summary (max 132 characters)"
+  },
+
+  "markCheck": {
+    "message": "Mark with ✓",
+    "description": "Toolbar ✓ button"
+  },
+  "markCross": {
+    "message": "Mark with ×",
+    "description": "Toolbar × button"
+  },
+  "writeNote": {
+    "message": "Write a note",
+    "description": "Toolbar note button"
+  },
+  "unmarkCheck": {
+    "message": "Remove ✓",
+    "description": "✓ mark beside a paragraph (click to remove)"
+  },
+  "unmarkCross": {
+    "message": "Remove ×",
+    "description": "× mark beside a paragraph (click to remove)"
+  },
+  "editNote": {
+    "message": "Click to edit the note",
+    "description": "Tooltip of a note shown inside the issue body"
+  },
+  "notePlaceholder": {
+    "message": "A note about this passage (only visible to you)",
+    "description": "Placeholder of the note editor"
+  },
+  "delete": {
+    "message": "Delete",
+    "description": "Note editor: delete button"
+  },
+  "cancel": {
+    "message": "Cancel",
+    "description": "Note editor: cancel button"
+  },
+  "save": {
+    "message": "Save",
+    "description": "Note editor: save button"
+  },
+  "saveHint": {
+    "message": "⌘/Ctrl+Enter to save",
+    "description": "Note editor: shortcut hint"
+  },
+
+  "composeTitle": {
+    "message": "Compose a reply",
+    "description": "Heading of the reply composer"
+  },
+  "close": {
+    "message": "Close",
+    "description": "Close button of the reply composer"
+  },
+  "optNote": {
+    "message": "Passages with notes",
+    "description": "Reply composer: which passages to quote"
+  },
+  "optCross": {
+    "message": "Passages marked ×",
+    "description": "Reply composer: which passages to quote"
+  },
+  "optCheck": {
+    "message": "Passages marked ✓",
+    "description": "Reply composer: which passages to quote"
+  },
+  "composeEmpty": {
+    "message": "Nothing to quote yet. Add notes or × marks from the toolbar and they will be collected here as quotes.",
+    "description": "Reply composer: nothing selected"
+  },
+  "copy": {
+    "message": "Copy",
+    "description": "Reply composer: copy button"
+  },
+  "insert": {
+    "message": "Insert into comment box",
+    "description": "Reply composer: insert button"
+  },
+  "quotedCount": {
+    "message": "Quoted passages: $COUNT$",
+    "description": "Reply composer: number of quoted passages",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "copied": {
+    "message": "Copied",
+    "description": "Reply composer: copy succeeded"
+  },
+  "copyFailed": {
+    "message": "Could not copy",
+    "description": "Reply composer: copy failed"
+  },
+  "insertCopiedInstead": {
+    "message": "No comment box was found, so the text was copied to the clipboard instead",
+    "description": "Reply composer: comment box missing, copied instead"
+  },
+  "insertFailed": {
+    "message": "No comment box was found",
+    "description": "Reply composer: comment box missing and copy failed"
+  },
+
+  "clearNothing": {
+    "message": "There are no marks or notes on this page to clear.",
+    "description": "Clear page: nothing to clear"
+  },
+  "clearConfirm": {
+    "message": "This will clear all $MARKED$ marks (✓ and ×) and $NOTED$ notes on this page.\nThis cannot be undone. Continue?",
+    "description": "Clear page: confirmation dialog",
+    "placeholders": {
+      "marked": { "content": "$1", "example": "5" },
+      "noted": { "content": "$2", "example": "2" }
+    }
+  },
+
+  "menuComposeReply": {
+    "message": "Compose a reply from notes and ×",
+    "description": "Context menu item and popup button"
+  },
+  "menuClearPage": {
+    "message": "Clear all marks and notes on this page",
+    "description": "Context menu item"
+  },
+
+  "popupStep1": {
+    "message": "Open an issue on GitHub.",
+    "description": "Popup how-to, step 1"
+  },
+  "popupStep2": {
+    "message": "Hover over a paragraph in the description or a comment and a [✓][×][Note] toolbar appears on its left.",
+    "description": "Popup how-to, step 2"
+  },
+  "popupStep3": {
+    "message": "Marks and notes are saved only in this browser and come back the next time you open the same issue.",
+    "description": "Popup how-to, step 3"
+  },
+  "popupClear": {
+    "message": "Clear marks and notes on this page",
+    "description": "Popup clear button"
+  },
+  "popupNotIssue": {
+    "message": "Open a GitHub issue page first, then try again.",
+    "description": "Popup: pressed outside an issue page"
+  },
+  "popupFoot": {
+    "message": "The same actions are also available from the right-click menu.",
+    "description": "Popup footer"
   }
 }

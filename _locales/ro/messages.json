@@ -1,0 +1,158 @@
+{
+  "name": {
+    "message": "GitHub Issue Read Marker",
+    "description": "Extension name; also the store listing title"
+  },
+  "description": {
+    "message": "Marchează paragrafele unui issue GitHub cu ✓ sau × și adaugă notițe private în timp ce citești.",
+    "description": "Extension summary; also the store listing summary (max 132 characters)"
+  },
+
+  "markCheck": {
+    "message": "Marchează cu ✓",
+    "description": "Toolbar ✓ button"
+  },
+  "markCross": {
+    "message": "Marchează cu ×",
+    "description": "Toolbar × button"
+  },
+  "writeNote": {
+    "message": "Scrie o notiță",
+    "description": "Toolbar note button"
+  },
+  "unmarkCheck": {
+    "message": "Elimină ✓",
+    "description": "✓ mark beside a paragraph (click to remove)"
+  },
+  "unmarkCross": {
+    "message": "Elimină ×",
+    "description": "× mark beside a paragraph (click to remove)"
+  },
+  "editNote": {
+    "message": "Clic pentru a edita notița",
+    "description": "Tooltip of a note shown inside the issue body"
+  },
+  "notePlaceholder": {
+    "message": "O notiță despre acest fragment (vizibilă doar pentru tine)",
+    "description": "Placeholder of the note editor"
+  },
+  "delete": {
+    "message": "Șterge",
+    "description": "Note editor: delete button"
+  },
+  "cancel": {
+    "message": "Anulează",
+    "description": "Note editor: cancel button"
+  },
+  "save": {
+    "message": "Salvează",
+    "description": "Note editor: save button"
+  },
+  "saveHint": {
+    "message": "⌘/Ctrl+Enter pentru a salva",
+    "description": "Note editor: shortcut hint"
+  },
+
+  "composeTitle": {
+    "message": "Compune un răspuns",
+    "description": "Heading of the reply composer"
+  },
+  "close": {
+    "message": "Închide",
+    "description": "Close button of the reply composer"
+  },
+  "optNote": {
+    "message": "Fragmente cu notițe",
+    "description": "Reply composer: which passages to quote"
+  },
+  "optCross": {
+    "message": "Fragmente marcate cu ×",
+    "description": "Reply composer: which passages to quote"
+  },
+  "optCheck": {
+    "message": "Fragmente marcate cu ✓",
+    "description": "Reply composer: which passages to quote"
+  },
+  "composeEmpty": {
+    "message": "Nu există încă nimic de citat. Adaugă notițe sau marcaje × din bara de instrumente și vor fi adunate aici ca citate.",
+    "description": "Reply composer: nothing selected"
+  },
+  "copy": {
+    "message": "Copiază",
+    "description": "Reply composer: copy button"
+  },
+  "insert": {
+    "message": "Inserează în comentariu",
+    "description": "Reply composer: insert button"
+  },
+  "quotedCount": {
+    "message": "Fragmente citate: $COUNT$",
+    "description": "Reply composer: number of quoted passages",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "copied": {
+    "message": "Copiat",
+    "description": "Reply composer: copy succeeded"
+  },
+  "copyFailed": {
+    "message": "Nu s-a putut copia",
+    "description": "Reply composer: copy failed"
+  },
+  "insertCopiedInstead": {
+    "message": "Nu s-a găsit caseta de comentariu, așa că textul a fost copiat în clipboard",
+    "description": "Reply composer: comment box missing, copied instead"
+  },
+  "insertFailed": {
+    "message": "Nu s-a găsit caseta de comentariu",
+    "description": "Reply composer: comment box missing and copy failed"
+  },
+
+  "clearNothing": {
+    "message": "Pe această pagină nu există marcaje sau notițe de șters.",
+    "description": "Clear page: nothing to clear"
+  },
+  "clearConfirm": {
+    "message": "Se vor șterge toate marcajele (✓ și ×) de pe această pagină ($MARKED$) și toate notițele ($NOTED$).\nAceastă acțiune nu poate fi anulată. Continui?",
+    "description": "Clear page: confirmation dialog",
+    "placeholders": {
+      "marked": { "content": "$1", "example": "5" },
+      "noted": { "content": "$2", "example": "2" }
+    }
+  },
+
+  "menuComposeReply": {
+    "message": "Compune un răspuns din notițe și ×",
+    "description": "Context menu item and popup button"
+  },
+  "menuClearPage": {
+    "message": "Șterge toate marcajele și notițele de pe această pagină",
+    "description": "Context menu item"
+  },
+
+  "popupStep1": {
+    "message": "Deschide un issue pe GitHub.",
+    "description": "Popup how-to, step 1"
+  },
+  "popupStep2": {
+    "message": "Treci cu mouse-ul peste un paragraf din descriere sau dintr-un comentariu și în stânga apare bara [✓][×][Notiță].",
+    "description": "Popup how-to, step 2"
+  },
+  "popupStep3": {
+    "message": "Marcajele și notițele sunt salvate doar în acest browser și reapar data viitoare când deschizi același issue.",
+    "description": "Popup how-to, step 3"
+  },
+  "popupClear": {
+    "message": "Șterge marcajele și notițele de pe această pagină",
+    "description": "Popup clear button"
+  },
+  "popupNotIssue": {
+    "message": "Deschide mai întâi un issue pe GitHub, apoi încearcă din nou.",
+    "description": "Popup: pressed outside an issue page"
+  },
+  "popupFoot": {
+    "message": "Aceleași acțiuni sunt disponibile și din meniul de clic dreapta.",
+    "description": "Popup footer"
+  }
+}
