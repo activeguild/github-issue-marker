@@ -99,7 +99,7 @@ sips -c 800 1280 tmp.png --out shot-1280x800.png   # 中央を 800x1280(高さ x
 ## 5. 公開後
 
 - [ ] `README.md` / `README.en.md` の「Chrome ウェブストアから」にストアの URL を追記
-- [ ] GitHub にリリースタグを打つ（`git tag v1.3.0 && git push --tags`）
+- [ ] GitHub にリリースタグを打つ（`git tag v1.4.0 && git push --tags`）
 
 ## 更新するとき
 
