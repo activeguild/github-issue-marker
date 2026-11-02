@@ -4,10 +4,9 @@
     "description": "Extension name; also the store listing title"
   },
   "description": {
-    "message": "Mark paragraphs of a GitHub issue with a check or a cross and attach private notes as you read.",
+    "message": "Mark paragraphs of GitHub issues and pull requests with a check or a cross and attach private notes as you read.",
     "description": "Extension summary; also the store listing summary (max 132 characters)"
   },
-
   "markCheck": {
     "message": "Mark with ✓",
     "description": "Toolbar ✓ button"
@@ -52,7 +51,6 @@
     "message": "⌘/Ctrl+Enter to save",
     "description": "Note editor: shortcut hint"
   },
-
   "composeTitle": {
     "message": "Compose a reply",
     "description": "Heading of the reply composer"
@@ -89,7 +87,10 @@
     "message": "Quoted passages: $COUNT$",
     "description": "Reply composer: number of quoted passages",
     "placeholders": {
-      "count": { "content": "$1", "example": "3" }
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
     }
   },
   "copied": {
@@ -108,7 +109,6 @@
     "message": "No comment box was found",
     "description": "Reply composer: comment box missing and copy failed"
   },
-
   "clearNothing": {
     "message": "There are no marks or notes on this page to clear.",
     "description": "Clear page: nothing to clear"
@@ -117,11 +117,16 @@
     "message": "This will clear all $MARKED$ marks (✓ and ×) and $NOTED$ notes on this page.\nThis cannot be undone. Continue?",
     "description": "Clear page: confirmation dialog",
     "placeholders": {
-      "marked": { "content": "$1", "example": "5" },
-      "noted": { "content": "$2", "example": "2" }
+      "marked": {
+        "content": "$1",
+        "example": "5"
+      },
+      "noted": {
+        "content": "$2",
+        "example": "2"
+      }
     }
   },
-
   "menuComposeReply": {
     "message": "Compose a reply from notes and ×",
     "description": "Context menu item and popup button"
@@ -130,9 +135,8 @@
     "message": "Clear all marks and notes on this page",
     "description": "Context menu item"
   },
-
   "popupStep1": {
-    "message": "Open an issue on GitHub.",
+    "message": "Open an issue or a pull request on GitHub.",
     "description": "Popup how-to, step 1"
   },
   "popupStep2": {
@@ -148,11 +152,246 @@
     "description": "Popup clear button"
   },
   "popupNotIssue": {
-    "message": "Open a GitHub issue page first, then try again.",
-    "description": "Popup: pressed outside an issue page"
+    "message": "Open a GitHub issue or the Conversation tab of a pull request first, then try again.",
+    "description": "Popup: pressed outside a supported page"
   },
   "popupFoot": {
     "message": "The same actions are also available from the right-click menu.",
     "description": "Popup footer"
+  },
+  "progress": {
+    "message": "$READ$ / $TOTAL$ read ($PCT$%)",
+    "description": "Progress badge at the bottom left of the page",
+    "placeholders": {
+      "read": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      },
+      "pct": {
+        "content": "$3"
+      }
+    }
+  },
+  "progressJump": {
+    "message": "Click to jump to the next unread passage (one without ✓ or ×)",
+    "description": "Tooltip of the progress badge"
+  },
+  "cmdNextBlock": {
+    "message": "Select the next paragraph",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdPrevBlock": {
+    "message": "Select the previous paragraph",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdNextUnread": {
+    "message": "Jump to the next unread paragraph",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdToggleCheck": {
+    "message": "Toggle ✓ on the selected paragraph",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdToggleCross": {
+    "message": "Toggle × on the selected paragraph",
+    "description": "Keyboard shortcut description"
+  },
+  "cmdWriteNote": {
+    "message": "Write a note on the selected paragraph",
+    "description": "Keyboard shortcut description"
+  },
+  "popupOverview": {
+    "message": "Saved pages",
+    "description": "Popup: button that opens the saved-pages list"
+  },
+  "popupShortcuts": {
+    "message": "Keyboard shortcuts",
+    "description": "Popup: heading of the shortcut list"
+  },
+  "popupShortcutsEdit": {
+    "message": "Change",
+    "description": "Popup: link to the shortcut settings"
+  },
+  "popupShortcutNone": {
+    "message": "Not set",
+    "description": "Popup: no key assigned"
+  },
+  "overviewTitle": {
+    "message": "Saved pages",
+    "description": "Heading of the saved-pages list"
+  },
+  "overviewIntro": {
+    "message": "Issues and pull requests you have marked or annotated. The data is stored only in this browser.",
+    "description": "Intro of the saved-pages list"
+  },
+  "overviewFilter": {
+    "message": "Filter by title or repository",
+    "description": "Saved pages: filter placeholder"
+  },
+  "overviewCount": {
+    "message": "Pages: $COUNT$",
+    "description": "Saved pages: number of pages shown",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewEmpty": {
+    "message": "No pages with marks or notes yet.",
+    "description": "Saved pages: nothing saved yet"
+  },
+  "overviewNoMatch": {
+    "message": "No pages match the filter.",
+    "description": "Saved pages: filter matched nothing"
+  },
+  "kindIssue": {
+    "message": "Issue",
+    "description": "Saved pages: kind label"
+  },
+  "kindPull": {
+    "message": "Pull request",
+    "description": "Saved pages: kind label"
+  },
+  "overviewCounts": {
+    "message": "✓ $CHECK$ · × $CROSS$ · notes $NOTES$",
+    "description": "Saved pages: mark and note counts",
+    "placeholders": {
+      "check": {
+        "content": "$1"
+      },
+      "cross": {
+        "content": "$2"
+      },
+      "notes": {
+        "content": "$3"
+      }
+    }
+  },
+  "overviewProgress": {
+    "message": "$PCT$% read",
+    "description": "Saved pages: progress, relative to the paragraph count at the last save",
+    "placeholders": {
+      "pct": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewUpdated": {
+    "message": "Updated $DATE$",
+    "description": "Saved pages: last updated",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewUnknownDate": {
+    "message": "unknown",
+    "description": "Saved pages: unknown date (old data format)"
+  },
+  "overviewDeleteConfirm": {
+    "message": "Delete the marks and notes for \"$TITLE$\"? This cannot be undone.",
+    "description": "Saved pages: confirm deleting one page",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewData": {
+    "message": "Data",
+    "description": "Saved pages: data section heading"
+  },
+  "overviewUsage": {
+    "message": "Storage used: $USED$ of $QUOTA$",
+    "description": "Saved pages: storage usage",
+    "placeholders": {
+      "used": {
+        "content": "$1"
+      },
+      "quota": {
+        "content": "$2"
+      }
+    }
+  },
+  "overviewExport": {
+    "message": "Export (JSON)",
+    "description": "Saved pages: export button"
+  },
+  "overviewImport": {
+    "message": "Import (JSON)",
+    "description": "Saved pages: import button"
+  },
+  "overviewDeleteStale": {
+    "message": "Delete pages not updated for 90+ days",
+    "description": "Saved pages: delete stale pages button"
+  },
+  "overviewStaleNone": {
+    "message": "No pages have gone 90 days without an update.",
+    "description": "Saved pages: no stale pages"
+  },
+  "overviewStaleConfirm": {
+    "message": "Delete the marks and notes of every page not updated for 90+ days ($COUNT$)? This cannot be undone.",
+    "description": "Saved pages: confirm deleting stale pages",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "overviewStaleDone": {
+    "message": "Pages deleted: $COUNT$",
+    "description": "Saved pages: stale pages deleted",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportDone": {
+    "message": "Pages exported: $COUNT$",
+    "description": "Saved pages: export finished",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "importInvalid": {
+    "message": "Nothing could be imported. Choose a JSON file exported by this extension.",
+    "description": "Saved pages: nothing importable"
+  },
+  "importConfirm": {
+    "message": "Import data for these pages ($COUNT$)? Pages you already have are merged paragraph by paragraph; where both have the same paragraph, the more recently updated page wins.",
+    "description": "Saved pages: confirm import",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "importDone": {
+    "message": "Import finished — new pages: $ADDED$, merged: $MERGED$",
+    "description": "Saved pages: import finished",
+    "placeholders": {
+      "added": {
+        "content": "$1"
+      },
+      "merged": {
+        "content": "$2"
+      }
+    }
+  },
+  "importFailed": {
+    "message": "Could not save: $ERROR$",
+    "description": "Saved pages: saving failed",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

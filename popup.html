@@ -16,8 +16,16 @@
 <div class="ghrc-actions">
   <button type="button" id="compose" data-i18n="menuComposeReply"></button>
   <button type="button" id="clear" class="ghrc-danger" data-i18n="popupClear"></button>
+  <button type="button" id="overview" data-i18n="popupOverview"></button>
 </div>
 <p class="ghrc-status" id="status" role="status" aria-live="polite"></p>
+<section class="ghrc-shortcuts">
+  <div class="ghrc-shortcuts-head">
+    <h2 data-i18n="popupShortcuts"></h2>
+    <button type="button" id="edit-shortcuts" class="ghrc-link" data-i18n="popupShortcutsEdit"></button>
+  </div>
+  <dl id="shortcuts"></dl>
+</section>
 <p class="ghrc-foot" data-i18n="popupFoot"></p>
 <script src="popup.js"></script>
 </body>

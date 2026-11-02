@@ -2,7 +2,7 @@
 
 **GitHub Issue Read Marker**
 
-最終更新日 / Last updated: 2026-10-28
+最終更新日 / Last updated: 2026-11-02
 
 ---
 
@@ -14,14 +14,18 @@
 
 本拡張機能が保存するのは、利用者が自分で付けた以下の情報のみです。
 
-- Issue ページ上で ✓ / × のマークを付けた箇所の位置（段落を識別するためのハッシュ値）
+- Issue / Pull Request のページ上で ✓ / × のマークを付けた箇所の位置（段落を識別するためのハッシュ値）
 - 利用者が入力したメモの本文
-- 対象となる Issue のパス（例: `/owner/repo/issues/123`）
+- 対象となるページのパス（例: `/owner/repo/issues/123`、`/owner/repo/pull/45`）
+- 「保存したページの一覧」に表示するための、そのページのタイトル・段落の数・最終更新日時
 
 ### 保存場所
 
 上記の情報はすべて、Chrome の `chrome.storage.local` API により**利用者のブラウザー内にのみ**保存されます。
 開発者を含む第三者がこの情報を閲覧することはできません。
+
+一覧画面の「書き出し」を使うと、上記の情報を JSON ファイルとして利用者の端末に保存します。
+このファイルは利用者自身が管理するもので、本拡張機能がどこかへ送信することはありません。
 
 ### 外部送信
 
@@ -41,13 +45,14 @@
 | `storage` | マークとメモをブラウザー内に保存するため |
 | `contextMenus` | 右クリックメニューに操作項目を追加するため |
 | `clipboardWrite` | 作成した返信コメントをクリップボードへコピーするため |
-| `https://github.com/*` | GitHub の Issue ページ上にツールバーとメモを表示するため |
+| `https://github.com/*` | GitHub の Issue / Pull Request ページ上にツールバーとメモを表示するため |
 
 ### データの削除
 
 保存したデータは、以下のいずれかの方法で削除できます。
 
 - 右クリックメニューまたはツールバーアイコンから「このページのマークとメモを消去」を実行する
+- 「保存したページの一覧」でページごと、または 90 日以上更新のないページをまとめて削除する
 - Chrome の拡張機能管理画面から本拡張機能をアンインストールする（保存データもあわせて削除されます）
 
 ### 免責
@@ -68,14 +73,18 @@ This extension **does not collect or transmit any personal information.**
 
 The only data it stores is what you create yourself:
 
-- The location of the paragraphs you marked with ✓ / × (a hash value used to identify a paragraph)
+- The location of the paragraphs you marked with ✓ / × on an issue or pull request page (a hash value used to identify a paragraph)
 - The text of the notes you typed
-- The path of the issue in question (e.g. `/owner/repo/issues/123`)
+- The path of the page in question (e.g. `/owner/repo/issues/123`, `/owner/repo/pull/45`)
+- That page's title, paragraph count and last-updated time, shown in the "Saved pages" list
 
 ### Where It Is Stored
 
 All of the above is stored **only inside your own browser** via Chrome's `chrome.storage.local` API.
 Neither the developer nor any third party can read it.
+
+The "Export" button on the saved-pages list writes the data above to a JSON file on your own device.
+That file is yours to manage; the extension never sends it anywhere.
 
 ### Transmission
 
@@ -95,13 +104,14 @@ The data is not used for advertising and is not read by any human.
 | `storage` | To save your marks and notes inside the browser |
 | `contextMenus` | To add the extension's commands to the right-click menu |
 | `clipboardWrite` | To copy the drafted reply comment to the clipboard |
-| `https://github.com/*` | To display the toolbar and notes on GitHub issue pages |
+| `https://github.com/*` | To display the toolbar and notes on GitHub issue and pull request pages |
 
 ### Deleting Your Data
 
 You can remove the stored data at any time by either:
 
 - Running "Clear all marks and notes on this page" from the right-click menu or the toolbar popup
+- Deleting a page, or every page not updated for 90+ days, from the "Saved pages" list
 - Uninstalling the extension from Chrome's extensions page (stored data is removed with it)
 
 ### Disclaimer

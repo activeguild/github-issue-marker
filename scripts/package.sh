@@ -14,6 +14,9 @@ FILES=(
   popup.html
   popup.js
   popup.css
+  overview.html
+  overview.js
+  overview.css
   _locales/ja/messages.json
   _locales/en/messages.json
   _locales/ro/messages.json
