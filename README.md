@@ -117,6 +117,24 @@ Issue の本文やコメントの段落にマウスを乗せると、左側に *
 
 `dist/github-issue-read-marker-<version>.zip` が作られます。拡張機能の動作に必要なファイルだけが含まれます。
 
+### チェックとリリース
+
+```sh
+python3 scripts/check.py
+```
+
+次のことを確かめます。
+
+- 各言語の `messages.json` のキーと置き換え文字が揃っているか
+- コードから参照している文言のキーが存在するか
+- 名前と概要がストアの文字数の上限に収まっているか
+- manifest が参照するファイルが `package.sh` に入っているか
+
+GitHub Actions では次のように動きます。
+
+- **PR と main への push**：このチェック、JavaScript の構文チェック、zip の作成を行います（[check.yml](.github/workflows/check.yml)）。
+- **`v1.4.0` のようなタグの push**：同じチェックをしてから、zip を GitHub Release に添付します（[release.yml](.github/workflows/release.yml)）。タグと `manifest.json` の `version` が違うと失敗します。
+
 ## 動作環境
 
 Manifest V3 に対応したブラウザー（Chrome 88 以降、Edge、Brave など Chromium 系）

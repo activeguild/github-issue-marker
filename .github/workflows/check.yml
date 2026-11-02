@@ -1,0 +1,31 @@
+# PR と main への push で、提出前のチェックと zip の作成を行う。
+# できた zip は Actions の画面から「Artifacts」としてダウンロードできる。
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: messages.json・manifest・同梱ファイルのチェック
+        run: python3 scripts/check.py
+
+      - name: JavaScript の構文チェック
+        run: for f in *.js; do node --check "$f"; done
+
+      - name: zip を作る
+        run: bash scripts/package.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: extension-zip
+          path: dist/*.zip

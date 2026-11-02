@@ -1,0 +1,30 @@
+# v1.4.0 のようなタグを push すると、チェックしてから zip を作り、GitHub Release に添付する。
+# タグと manifest.json の version が違うときは失敗する。
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: messages.json・manifest・同梱ファイルのチェック
+        run: python3 scripts/check.py --tag "$GITHUB_REF_NAME"
+
+      - name: JavaScript の構文チェック
+        run: for f in *.js; do node --check "$f"; done
+
+      - name: zip を作る
+        run: bash scripts/package.sh
+
+      - name: GitHub Release を作って zip を添付する
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --title "$GITHUB_REF_NAME" --generate-notes --verify-tag

@@ -124,6 +124,27 @@ There is no build step — plain JavaScript and CSS are loaded as-is.
 This writes `dist/github-issue-read-marker-<version>.zip` containing only the files the extension needs
 at runtime.
 
+### Checks and releases
+
+```sh
+python3 scripts/check.py
+```
+
+This checks that:
+
+- every locale's `messages.json` has the same keys and placeholders
+- every message key referenced from the code exists
+- the name and summary fit the store's length limits
+- every file the manifest references is listed in `package.sh`
+
+On GitHub Actions:
+
+- **Pull requests and pushes to main** run this check, a JavaScript syntax check and the ZIP build
+  ([check.yml](.github/workflows/check.yml)).
+- **Pushing a tag such as `v1.4.0`** runs the same checks, then attaches the ZIP to a GitHub Release
+  ([release.yml](.github/workflows/release.yml)). It fails if the tag does not match `version` in
+  `manifest.json`.
+
 ## Requirements
 
 Any Manifest V3 browser — Chrome 88+, Edge, Brave and other Chromium-based browsers.

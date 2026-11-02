@@ -41,7 +41,7 @@ GitHub Issue Read Marker は、Issue と Pull Request（会話タブ）の本文
 押すと、まだ印の無い次の段落へ移動します。
 
 ■ キーボードだけで読み進められる
-Alt+Shift+J で次の段落へ、Alt+Shift+C で ✓、Alt+Shift+X で ×、Alt+Shift+N でメモ。
+Alt+Shift+J で次の段落へ、Alt+Shift+C で ✓、Alt+Shift+X で ×、Alt+Shift+N でメモ（Mac では Alt の代わりに Option）。
 キーは chrome://extensions/shortcuts で自由に変えられます。
 
 ■ 付けた印は保存されます
@@ -49,6 +49,9 @@ Alt+Shift+J で次の段落へ、Alt+Shift+C で ✓、Alt+Shift+X で ×、Alt+
 「保存したページの一覧」で、印を付けた Issue / Pull Request を新しい順に見返せます。
 JSON ファイルへの書き出し・読み込みで、別の PC へ移すこともできます。
 不要になったら、ページごと・90 日以上更新のないページをまとめて、などの方法で消せます。
+
+■ 対応言語
+画面は日本語・英語・ルーマニア語に対応し、ブラウザーの表示言語に合わせて切り替わります。
 
 ■ プライバシー
 外部への通信は一切行いません。
