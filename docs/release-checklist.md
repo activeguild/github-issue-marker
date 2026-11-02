@@ -1,7 +1,7 @@
 # 公開チェックリスト
 
 Chrome ウェブストアへ提出するまでの手順です。掲載文は [store-listing.ja.md](store-listing.ja.md) /
-[store-listing.en.md](store-listing.en.md) にまとめてあります。
+[store-listing.en.md](store-listing.en.md) / [store-listing.ro.md](store-listing.ro.md) にまとめてあります。
 
 ## 1. リポジトリ側（完了済み）
 
@@ -91,6 +91,8 @@ sips -c 800 1280 tmp.png --out shot-1280x800.png   # 中央を 800x1280(高さ x
 - [ ] 新しいアイテムとして zip をアップロード
 - [ ] 「ストアの掲載情報」タブに store-listing.ja.md の内容を貼る（スクリーンショットもここ）
 - [ ] 掲載情報タブで英語を追加し、store-listing.en.md の「詳細な説明」を貼る（名前と概要は `_locales/en` から自動で切り替わります）
+- [ ] 掲載情報タブでルーマニア語を追加し、store-listing.ro.md の「詳細な説明」を貼る（名前と概要は `_locales/ro` から）
+- [ ] 公開済みの日本語・英語の「詳細な説明」を、1.4.0 の提出と同時に最新の文面へ差し替える（先に差し替えると、公開中の版に無い機能を説明してしまう）
 - [ ] 「プライバシー」タブに単一用途の説明・権限の理由・データ使用の申告を入力
 - [ ] プライバシーポリシー URL に `https://github.com/activeguild/github-issue-marker/blob/main/PRIVACY.md` を入力
 - [ ] 「配信」タブで公開範囲（公開／限定公開）と対象国を設定

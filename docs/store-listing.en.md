@@ -44,13 +44,16 @@ Click it to jump to the next paragraph without a mark.
 
 ■ Read with the keyboard alone
 Alt+Shift+J selects the next paragraph, Alt+Shift+C toggles ✓, Alt+Shift+X toggles ×, Alt+Shift+N
-writes a note. Change any of them at chrome://extensions/shortcuts.
+writes a note (use Option instead of Alt on a Mac). Change any of them at chrome://extensions/shortcuts.
 
 ■ Your marks are saved
 Marks and notes are stored per page and restored the next time you open it.
 "Saved pages" lists every issue and pull request you have marked, newest first.
 Export to a JSON file and import it again to move your data to another computer.
 Delete a single page, or every page not updated for 90 days, when you no longer need them.
+
+■ Languages
+The interface is available in English, Japanese and Romanian and follows your browser's language.
 
 ■ Privacy
 This extension never communicates with any external server.
