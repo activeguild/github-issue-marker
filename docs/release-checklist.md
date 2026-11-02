@@ -14,6 +14,7 @@ Chrome ウェブストアへ提出するまでの手順です。掲載文は [st
 - [x] `_locales/en` `_locales/ja` `_locales/ro`（名前・概要と画面の文言。既定は英語）
 - [x] `.gitignore`
 - [x] `scripts/package.sh`（提出用 zip を作る）
+- [x] `scripts/check.py` と `.github/workflows/`（言語ファイル・同梱ファイルのチェック、タグで Release に zip を添付）
 
 ## 2. 動作確認（手元で実施）
 
@@ -87,7 +88,7 @@ sips -c 800 1280 tmp.png --out shot-1280x800.png   # 中央を 800x1280(高さ x
 ## 4. 提出
 
 - [ ] [Chrome Developer Dashboard](https://chrome.google.com/webstore/devconsole) で開発者登録（初回のみ $5・2 段階認証が必要）
-- [ ] `./scripts/package.sh` で zip を作る
+- [ ] `python3 scripts/check.py` が通ることを確かめ、`./scripts/package.sh` で zip を作る（タグを先に打つなら、Release に添付された zip を使ってもよい）
 - [ ] 新しいアイテムとして zip をアップロード
 - [ ] 「ストアの掲載情報」タブに store-listing.ja.md の内容を貼る（スクリーンショットもここ）
 - [ ] 掲載情報タブで英語を追加し、store-listing.en.md の「詳細な説明」を貼る（名前と概要は `_locales/en` から自動で切り替わります）
@@ -101,10 +102,11 @@ sips -c 800 1280 tmp.png --out shot-1280x800.png   # 中央を 800x1280(高さ x
 ## 5. 公開後
 
 - [ ] `README.md` / `README.en.md` の「Chrome ウェブストアから」にストアの URL を追記
-- [ ] GitHub にリリースタグを打つ（`git tag v1.4.0 && git push --tags`）
+- [ ] GitHub にリリースタグを打つ（`git tag v1.4.0 && git push origin v1.4.0`）。Actions が GitHub Release を作り、zip を添付します
 
 ## 更新するとき
 
 1. `manifest.json` の `version` を上げる
-2. `./scripts/package.sh`
+2. `python3 scripts/check.py` と `./scripts/package.sh`
 3. ダッシュボードで新しいパッケージをアップロードして再提出
+4. 公開されたらタグを打つ（Release と zip は Actions が作ります）
