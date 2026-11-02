@@ -25,3 +25,31 @@ function send(message) {
 
 document.getElementById('compose').addEventListener('click', () => send('ghrc:compose-reply'));
 document.getElementById('clear').addEventListener('click', () => send('ghrc:clear-page'));
+document.getElementById('overview').addEventListener('click', () => {
+  chrome.runtime.openOptionsPage();
+  window.close();
+});
+
+// キーボードショートカットの一覧（利用者が chrome://extensions/shortcuts で変えた値を表示する）
+chrome.commands.getAll((commands) => {
+  const dl = document.getElementById('shortcuts');
+  for (const c of commands) {
+    if (!c.description) continue; // ツールバーアイコンを開く既定のコマンド
+    const dt = document.createElement('dt');
+    dt.textContent = c.description;
+    const dd = document.createElement('dd');
+    if (c.shortcut) {
+      const kbd = document.createElement('kbd');
+      kbd.textContent = c.shortcut;
+      dd.appendChild(kbd);
+    } else {
+      dd.textContent = chrome.i18n.getMessage('popupShortcutNone');
+      dd.className = 'ghrc-muted';
+    }
+    dl.append(dt, dd);
+  }
+});
+document.getElementById('edit-shortcuts').addEventListener('click', () => {
+  chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+  window.close();
+});

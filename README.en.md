@@ -2,9 +2,12 @@
 
 <img src="icons/icon128.png" width="96" align="right" alt="">
 
-A Chrome extension for reading long GitHub issues: mark any paragraph of the issue body or a comment
-with **✓ / ×**, and attach private notes to it. Your marks are saved in the browser and restored the
-next time you open the same issue.
+A Chrome extension for reading long GitHub issues and pull requests: mark any paragraph of the
+description or a comment with **✓ / ×**, and attach private notes to it. Your marks are saved in the
+browser and restored the next time you open the same page.
+
+It works on issue pages and on the **Conversation** tab of pull requests (not on Files changed and
+the other PR tabs).
 
 English | [日本語](README.md)
 
@@ -27,7 +30,7 @@ can all be marked.
 
 ### Draft a reply from your notes and ×s
 
-Choose **"Draft a reply from notes and ×"** from the right-click menu or the toolbar popup, and the
+Choose **"Compose a reply from notes and ×"** from the right-click menu or the toolbar popup, and the
 extension collects every marked spot as a Markdown blockquote (`>`) with your note underneath:
 
 ```markdown
@@ -45,6 +48,39 @@ your note goes here
 
 Choose **"Clear all marks and notes on this page"** from the right-click menu or the toolbar popup.
 A dialog shows how many marks and notes will be removed before anything is deleted.
+
+### See how much you have read
+
+Once a page has at least one mark, a badge at the bottom left shows how many paragraphs carry a ✓ or ×,
+out of all paragraphs on the page (e.g. `45 / 120 read (38%)`). The total grows as more comments load.
+Click the badge to jump to the next paragraph that has neither mark.
+
+### Keyboard shortcuts
+
+| Action | Default key |
+| --- | --- |
+| Select the next paragraph | `Alt+Shift+J` (Mac: `⌥⇧J`) |
+| Toggle ✓ on the selected paragraph | `Alt+Shift+C` |
+| Toggle × on the selected paragraph | `Alt+Shift+X` |
+| Write a note on the selected paragraph | `Alt+Shift+N` |
+| Select the previous paragraph | not set |
+| Jump to the next unread paragraph | not set |
+| Compose a reply from notes and × | not set |
+
+The selected paragraph gets a blue outline. The first press of a marking key only selects the first
+paragraph on screen. Shortcuts do nothing while you are typing in a text field. Change or assign keys
+at `chrome://extensions/shortcuts` (the toolbar popup has a link there and lists the current keys).
+
+### Saved pages, export and import
+
+**Saved pages** in the toolbar popup (also the extension's options page) lists every issue and pull
+request you have marked, newest first, with its counts and progress. From there you can:
+
+- open or delete a page
+- delete pages that have not been updated for 90 days or more
+- **export** everything to a JSON file and **import** it again, e.g. to move to another computer.
+  Pages you already have are merged paragraph by paragraph; where both copies have the same paragraph,
+  the more recently updated page wins (a note is kept from the older copy if the newer one has none).
 
 ## Installation
 
@@ -69,10 +105,11 @@ A dialog shows how many marks and notes will be removed before anything is delet
 | File | Role |
 | --- | --- |
 | `manifest.json` | Extension definition (Manifest V3) |
-| `content.js` | The main script running on GitHub issue pages: toolbar, notes, reply composer |
+| `content.js` | The main script running on GitHub issue / PR pages: toolbar, notes, reply composer, progress badge, keyboard navigation |
 | `content.css` | Styling for the above; follows GitHub's Primer CSS variables |
-| `background.js` | Registers the right-click menu and relays messages to `content.js` |
+| `background.js` | Registers the right-click menu and relays menu clicks and keyboard shortcuts to `content.js` |
 | `popup.html` / `popup.js` / `popup.css` | The toolbar icon popup |
+| `overview.html` / `overview.js` / `overview.css` | Saved-pages list with export / import (also the options page) |
 | `_locales/` | Name, summary and UI strings in English, Japanese and Romanian; picked by the browser's display language, falling back to English |
 | `icons/` | Extension icons (`icon.svg` is the source) |
 

@@ -41,5 +41,33 @@
   ],
   "background": {
     "service_worker": "background.js"
+  },
+  "options_page": "overview.html",
+  "commands": {
+    "next-block": {
+      "suggested_key": { "default": "Alt+Shift+J" },
+      "description": "__MSG_cmdNextBlock__"
+    },
+    "toggle-check": {
+      "suggested_key": { "default": "Alt+Shift+C" },
+      "description": "__MSG_cmdToggleCheck__"
+    },
+    "toggle-cross": {
+      "suggested_key": { "default": "Alt+Shift+X" },
+      "description": "__MSG_cmdToggleCross__"
+    },
+    "write-note": {
+      "suggested_key": { "default": "Alt+Shift+N" },
+      "description": "__MSG_cmdWriteNote__"
+    },
+    "prev-block": {
+      "description": "__MSG_cmdPrevBlock__"
+    },
+    "next-unread": {
+      "description": "__MSG_cmdNextUnread__"
+    },
+    "compose-reply": {
+      "description": "__MSG_menuComposeReply__"
+    }
   }
 }
