@@ -71,7 +71,7 @@ Issue の本文やコメントの段落にマウスを乗せると、左側に *
 | `content.css` | 上記 UI のスタイル。GitHub の Primer CSS 変数に追従します |
 | `background.js` | 右クリックメニューの登録と、content.js へのメッセージ送信 |
 | `popup.html` / `popup.js` / `popup.css` | ツールバーアイコンのポップアップ |
-| `_locales/` | ストアに出す名前と概要の日英訳（拡張機能の UI は日本語のみ） |
+| `_locales/` | 名前・概要と画面の文言（英語・日本語・ルーマニア語）。ブラウザーの表示言語で切り替わり、該当が無ければ英語 |
 | `icons/` | 拡張機能アイコン（`icon.svg` が原本） |
 
 ビルド手順はありません。素の JavaScript / CSS をそのまま読み込みます。

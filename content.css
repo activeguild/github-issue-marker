@@ -185,6 +185,7 @@
 
 #ghrc-layer .ghrc-editor-actions {
   display: flex;
+  flex-wrap: wrap; /* 訳文が長い言語でもはみ出さない */
   align-items: center;
   gap: 6px;
   margin-top: 8px;

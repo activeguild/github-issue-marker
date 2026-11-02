@@ -11,7 +11,7 @@ Chrome ウェブストアへ提出するまでの手順です。掲載文は [st
 - [x] `README.md`（日本語）・`README.en.md`（英語）
 - [x] `LICENSE`（MIT）
 - [x] `PRIVACY.md`（日英併記。これがストアに登録するプライバシーポリシー URL になります）
-- [x] `_locales/ja` `_locales/en`（ストアの名前・概要を日英で出し分ける）
+- [x] `_locales/en` `_locales/ja` `_locales/ro`（名前・概要と画面の文言。既定は英語）
 - [x] `.gitignore`
 - [x] `scripts/package.sh`（提出用 zip を作る）
 

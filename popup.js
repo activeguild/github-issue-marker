@@ -2,6 +2,11 @@
 
 const status = document.getElementById('status');
 
+document.documentElement.lang = chrome.i18n.getUILanguage();
+for (const el of document.querySelectorAll('[data-i18n]')) {
+  el.textContent = chrome.i18n.getMessage(el.dataset.i18n);
+}
+
 // content.js へ指示を送る。拡張を更新した直後や Issue ページ以外では応答が無い
 function send(message) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -10,7 +15,7 @@ function send(message) {
     chrome.tabs.sendMessage(tab.id, { type: message }, (res) => {
       // 応答が無い（GitHub 以外）か active でない（Issue ページ以外）なら何も起きていない
       if (chrome.runtime.lastError || !res || !res.active) {
-        status.textContent = 'GitHub の Issue ページを開いてからお試しください。';
+        status.textContent = chrome.i18n.getMessage('popupNotIssue');
         return;
       }
       window.close(); // 操作はページ側で続くのでポップアップは閉じる

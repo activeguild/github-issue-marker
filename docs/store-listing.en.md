@@ -61,9 +61,10 @@ Developer Tools
 
 ### Language
 
-The default locale is Japanese. Add English in the store listing tab of the dashboard; the name and
-summary switch to the English messages automatically. Only the detailed description below has to be
-pasted in by hand.
+The default locale is English (`default_locale` in `manifest.json`); Japanese and Romanian are also
+bundled in `_locales/`. Add Japanese (and optionally Romanian) in the store listing tab of the
+dashboard; the name and summary switch to the matching messages automatically. Only the detailed
+description has to be pasted in by hand.
 
 ### Support links
 
